@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import random
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from django.views import View
 # Create your views here.
 #function based view
 
@@ -48,3 +48,17 @@ def contact(request):
 	context = {
 	}
 	return render(request,"contact.html", context)#response
+
+#class based view
+class ContactView(View):
+	def get(self, request, *args, **kwargs):
+		context = {}
+		return render(request, "contact.html", context)
+
+	# def post(self, request, *args, **kwargs):
+	# 	context = {}
+	# 	return render(request, "contact.html", context)
+
+	# def put(self, request, *args, **kwargs):
+	# 	context = {}
+	# 	return render(request, "contact.html", context)
