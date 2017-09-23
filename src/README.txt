@@ -47,4 +47,50 @@ pip freeze > requirements.txt
 
 # run migration & create superuser
 python manage.py migrate
-python manage.py createsuperuser
+python manage.py 
+
+
+#shell
+
+#import
+
+from restaurant.models import RestaurantLocation
+
+#adding data to models
+obj = RestaurantLocation.objects.create(name='Chronic tacos', location='Corona Del Mar', category='Mexican')
+obj
+obj.timestamp
+
+qs = RestaurantLocation.objects.all()
+qs
+
+qs =RestaurantLocation.objects.filter(category__iexact='mexican').exclude(name__icontains='Tacos')
+
+qs = count()
+
+#view all objects
+RestaurantLocation.objects.all()
+for obj in RestaurantLocation.objects.all():
+	print(obj.name)
+
+#create a new query set
+qs =RestaurantLocation.objects.all()
+qs.filter(category='Phillipines') or qs.filter(category__iexact='Phillipines')
+
+
+#update field
+qs.update(category='philippines')
+qs.filter(category__iexact='philippines')
+
+
+#query set 2
+qs2 = RestaurantLocation.objects.filter(category__iexact='mexican')
+qs2
+
+#if it exists
+qs.exists()
+
+
+#count
+qs2.count()
+
