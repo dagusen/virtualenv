@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from .models import RestaurantLocation
 # Create your views here.
 
@@ -16,6 +16,10 @@ def restaurant_listview(request):
 		"object_list" : ResLoc
 	}
 	return render(request, template_name, context)
+
+class RestaurantListView(ListView):
+	ResList = RestaurantLocation.objects.all()
+	
 
 
 

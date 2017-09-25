@@ -1,4 +1,4 @@
-template inheretance 1:20:44
+2:25:58
 
 # create virtualenv
 mkdir name_of_VirEnv && cd name_of_VirEnv
