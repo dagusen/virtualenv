@@ -1,4 +1,4 @@
-2:25:58
+2:28:39 generic list view
 
 # create virtualenv
 mkdir name_of_VirEnv && cd name_of_VirEnv

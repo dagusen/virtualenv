@@ -9,16 +9,25 @@ from django.views.generic import TemplateView, ListView
 from .models import RestaurantLocation
 # Create your views here.
 
-def restaurant_listview(request):
-	template_name = 'restaurant/restaurant-list.html'
-	ResLoc = RestaurantLocation.objects.all()
-	context = {
-		"object_list" : ResLoc
-	}
-	return render(request, template_name, context)
+# def restaurant_listview(request):
+# 	template_name = 'restaurant/restaurant-list.html'
+# 	ResLoc = RestaurantLocation.objects.all()
+# 	context = {
+# 		"object_list" : ResLoc
+# 	}
+# 	return render(request, template_name, context)
 
 class RestaurantListView(ListView):
-	ResList = RestaurantLocation.objects.all()
+	queryset = RestaurantLocation.objects.all()
+	template_name = 'restaurant/restaurant-list.html'
+
+class MexicanRestaurantListView(ListView):
+	queryset = RestaurantLocation.objects.filter(category__iexact='mexican')
+	template_name = 'restaurant/restaurant-list.html'
+
+class AsianFusionRestaurantListView(ListView):
+	queryset = RestaurantLocation.objects.filter(category__iexact='asian fusion')
+	template_name = 'restaurant/restaurant-list.html'
 	
 
 
