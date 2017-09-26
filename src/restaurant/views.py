@@ -2,32 +2,29 @@
 from __future__ import unicode_literals
 
 #import random
+from django.db.models import 	Q
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
 from django.views.generic import TemplateView, ListView
 from .models import RestaurantLocation
+
 # Create your views here.
 
-# def restaurant_listview(request):
-# 	template_name = 'restaurant/restaurant-list.html'
-# 	ResLoc = RestaurantLocation.objects.all()
-# 	context = {
-# 		"object_list" : ResLoc
-# 	}
-# 	return render(request, template_name, context)
-
 class RestaurantListView(ListView):
-	queryset = RestaurantLocation.objects.all()
-	template_name = 'restaurant/restaurant-list.html'
+	def get_queryset(self):
+		print(self.kwargs)
+		slug = self.kwargs.get("slug")
+		if slug:
+			queryset = RestaurantLocation.objects.filter(
+					Q(category__iexact=slug) |
+					Q(category__icontains=slug)
+				)
+		else:
+			queryset = RestaurantLocation.objects.all()
+		return queryset
 
-class MexicanRestaurantListView(ListView):
-	queryset = RestaurantLocation.objects.filter(category__iexact='mexican')
-	template_name = 'restaurant/restaurant-list.html'
 
-class AsianFusionRestaurantListView(ListView):
-	queryset = RestaurantLocation.objects.filter(category__iexact='asian fusion')
-	template_name = 'restaurant/restaurant-list.html'
 	
 
 
@@ -50,6 +47,62 @@ class AsianFusionRestaurantListView(ListView):
 
 
 
+
+
+
+
+# def restaurant_listview(request):
+# 	template_name = 'restaurant/restaurant-list.html'
+# 	ResLoc = RestaurantLocation.objects.all()
+# 	context = {
+# 		"object_list" : ResLoc
+# 	}
+# 	return render(request, template_name, context)
+
+
+
+
+# class SearchRestaurantListView(ListView):
+# 	template_name = 'restaurant/restaurant-list.html'
+
+# 	def get_queryset(self):
+# 		print(self.kwargs)
+# 		slug = self.kwargs.get("slug")
+# 		if slug:
+# 			queryset = RestaurantLocation.objects.filter(
+# 					Q(category__iexact=slug) |
+# 					Q(category__icontains=slug)
+# 				)
+# 		else:
+# 			queryset = RestaurantLocation.objects.none()
+# 		return queryset
+# class SearchRestaurantListView(ListView):
+# 	template_name = 'restaurant/restaurant-list.html'
+
+# 	def get_queryset(self):
+# 		print(self.kwargs)
+# 		slug = self.kwargs.get("slug")
+# 		if slug:
+# 			queryset = RestaurantLocation.objects.filter(
+# 					Q(category__iexact=slug) |
+# 					Q(category__icontains=slug)
+# 				)
+# 		else:
+# 			queryset = RestaurantLocation.objects.none()
+# 		return queryset
+
+
+
+
+
+
+# class MexicanRestaurantListView(ListView):
+# 	queryset = RestaurantLocation.objects.filter(category__iexact='mexican')
+# 	template_name = 'restaurant/restaurant-list.html'
+
+# class AsianFusionRestaurantListView(ListView):
+# 	queryset = RestaurantLocation.objects.filter(category__iexact='asian fusion')
+# 	template_name = 'restaurant/restaurant-list.html'
 
 
 
