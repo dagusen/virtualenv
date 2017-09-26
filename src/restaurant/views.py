@@ -4,12 +4,38 @@ from __future__ import unicode_literals
 #import random
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
+
+#forms 
+#from .forms import RestaurantCreateForm
+
+#models
 from .models import RestaurantLocation
 
 # Create your views here.
+
+#forms
+def restaurant_createview(request):
+	# if request.method == "GET":
+	# 	print("get data")
+	if request.method == "POST":
+		# print("post data")
+		# print(request.POST)
+		title = request.POST.get("title") # request.POST["title"]
+		location = request.POST.get("location")
+		category = request.POST.get("category")
+		obj = RestaurantLocation.objects.create(
+				name = title,
+				location = location,
+				category = category,
+			)
+		return HttpResponseRedirect("/restaurant/")
+	template_name = 'restaurant/form.html'
+	context = {}
+	return render(request, template_name, context)
+
 
 class RestaurantListView(ListView):
 	def get_queryset(self):
