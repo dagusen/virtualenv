@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 #import random
-from django.db.models import 	Q
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.views import View
@@ -33,10 +33,10 @@ class RestaurantDetailView(DetailView):
 	# 	print(context)
 	# 	return context
 
-	def get_object(self, *args, **kwargs):
-		res_id = self.kwargs.get('res_id')
-		obj = get_object_or_404(RestaurantLocation, id=res_id) # pk = rest_id
-		return obj
+	# def get_object(self, *args, **kwargs):
+	# 	res_id = self.kwargs.get('res_id')
+	# 	obj = get_object_or_404(RestaurantLocation, id=res_id) # pk = rest_id
+	# 	return obj
 
 	
 

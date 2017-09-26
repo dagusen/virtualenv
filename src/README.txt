@@ -1,4 +1,4 @@
-2:28:39 generic list view
+3:00:49 Get Single Items
 
 # create virtualenv
 mkdir name_of_VirEnv && cd name_of_VirEnv
