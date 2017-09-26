@@ -1,4 +1,4 @@
-3:00:49 Get Single Items
+3:09:54 Get Single Items from db
 
 # create virtualenv
 mkdir name_of_VirEnv && cd name_of_VirEnv
@@ -93,3 +93,14 @@ qs.exists()
 
 #count
 qs2.count()
+
+
+3:00:49 Get Single Items from db
+from restaurant.models import RestaurantLocation
+qs = RestaurantLocation
+qs
+qs.first, last, [1]
+RestaurantLocation.objects.get(pk=1)
+#404
+from django.shortcuts import render, get_object_or_404
+obj = get_object_or_404(RestaurantLocation, pk=12000)
