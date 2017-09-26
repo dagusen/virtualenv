@@ -93,4 +93,3 @@ qs.exists()
 
 #count
 qs2.count()
-
