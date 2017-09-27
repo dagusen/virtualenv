@@ -18,11 +18,28 @@ from .models import RestaurantLocation
 
 # Create your views here.
 
+class RestaurantListView(ListView):
+	def get_queryset(self):
+		print(self.kwargs)
+		slug = self.kwargs.get("slug")
+		if slug:
+			queryset = RestaurantLocation.objects.filter(
+					Q(category__iexact=slug) |
+					Q(category__icontains=slug)
+				)
+		else:
+			queryset = RestaurantLocation.objects.all()
+		return queryset
+
+class RestaurantDetailView(DetailView):
+	queryset = RestaurantLocation.objects.all()
+
 #forms
 
 class RestaurantCreateView(CreateView):
 	form_class = RestaurantLocationCreateForm
-	template_name = 'restaurant/form/html'
+	template_name = 'restaurant/form.html'
+	success_url = "/restaurant/"
 
 def restaurant_createview(request):
 	form = RestaurantLocationCreateForm(request.POST or None)
@@ -40,33 +57,6 @@ def restaurant_createview(request):
 	}
 	return render(request, template_name, context)
 
-
-class RestaurantListView(ListView):
-	def get_queryset(self):
-		print(self.kwargs)
-		slug = self.kwargs.get("slug")
-		if slug:
-			queryset = RestaurantLocation.objects.filter(
-					Q(category__iexact=slug) |
-					Q(category__icontains=slug)
-				)
-		else:
-			queryset = RestaurantLocation.objects.all()
-		return queryset
-
-class RestaurantDetailView(DetailView):
-	queryset = RestaurantLocation.objects.all()
-
-	# def get_context_data(self, *args, **kwargs):
-	# 	print(self.kwargs)
-	# 	context = super(RestaurantDetailView, self).get_context_data(*args, **kwargs)
-	# 	print(context)
-	# 	return context
-
-	# def get_object(self, *args, **kwargs):
-	# 	res_id = self.kwargs.get('res_id')
-	# 	obj = get_object_or_404(RestaurantLocation, id=res_id) # pk = rest_id
-	# 	return obj
 
 	
 
@@ -90,9 +80,21 @@ class RestaurantDetailView(DetailView):
 
 
 
+#restaurant details
 
+# class RestaurantDetailView(DetailView):
+# 	queryset = RestaurantLocation.objects.all()
 
+# 	# def get_context_data(self, *args, **kwargs):
+# 	# 	print(self.kwargs)
+# 	# 	context = super(RestaurantDetailView, self).get_context_data(*args, **kwargs)
+# 	# 	print(context)
+# 	# 	return context
 
+# 	# def get_object(self, *args, **kwargs):
+# 	# 	res_id = self.kwargs.get('res_id')
+# 	# 	obj = get_object_or_404(RestaurantLocation, id=res_id) # pk = rest_id
+# 	# 	return obj
 
 
 
