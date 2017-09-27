@@ -1,4 +1,5 @@
 3:09:54 Get Single Items from db
+4:07:03 user
 
 # create virtualenv
 mkdir name_of_VirEnv && cd name_of_VirEnv
@@ -104,3 +105,28 @@ RestaurantLocation.objects.get(pk=1)
 #404
 from django.shortcuts import render, get_object_or_404
 obj = get_object_or_404(RestaurantLocation, pk=12000)
+
+
+#show user in shell
+from django.contrib.auth import get_user_model
+User = get_user_model
+User.objects.al()
+admin_user = User.objects.get(id=1)
+admin_user
+admin_user.username
+admin_user.is_active
+admin_user.is_staff
+obj = admin_user
+obj.restaurantlocation.all()
+obj.restaurantlocation.filter(contain__iexact='mexican')
+
+#filter all post
+from restaurant.models import RestaurantLocation
+RestaurantLocation.objects.filter(user__id=1)
+RestaurantLocation.objects.filter(user__iexact='admin')
+
+new_qs = cfe_user.restaurantlocation_set.all()
+new_obj = new_qs.first()
+new_obj
+RK = new_obj.__class__
+RK.objects.all()

@@ -2,16 +2,25 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.db.models.signals import pre_save, post_save
 
+#signals
+from django.db.models.signals import pre_save, post_save
+#slug generator
 from .utils import unique_slug_generator
 
 #validators
 from .validators import validate_category
 
+
+#for user
+from django.conf import settings
+
+User = settings.AUTH_USER_MODEL
+
 # Create your models here.
 
 class RestaurantLocation(models.Model):
+	user 			= models.ForeignKey(User)# class_instance.model_set.all() # Django Models Unleashed JOINCFE.com
 	name			= models.CharField(max_length=120)
 	location		= models.CharField(max_length=120, null=True, blank=True)
 	category		= models.CharField(max_length=120, null=True, blank=True, validators=[validate_category])
