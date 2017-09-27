@@ -8,6 +8,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
 
+#login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 #forms 
 from .forms import (
 	RestaurantLocationCreateForm,
@@ -36,7 +40,8 @@ class RestaurantDetailView(DetailView):
 
 #forms
 
-class RestaurantCreateView(CreateView):
+class RestaurantCreateView(LoginRequiredMixin, CreateView):
+	#login_url = '/login'
 	form_class = RestaurantLocationCreateForm
 	template_name = 'restaurant/form.html'
 	success_url = "/restaurant/"
@@ -46,6 +51,7 @@ class RestaurantCreateView(CreateView):
 		instance.user = self.request.user
 		return super(RestaurantCreate, self).form_valid(form)
 
+@login_required()#(login_url='/login/')
 def restaurant_createview(request):
 	form = RestaurantLocationCreateForm(request.POST or None)
 	errors = None

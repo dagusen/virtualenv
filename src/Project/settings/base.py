@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'restaurant',
 ]
 
+ROOT_URLCONF = 'mysite.urls'
+# to redirect in login
+LOGIN_URL = '/login/'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
