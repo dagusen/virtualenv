@@ -41,6 +41,11 @@ class RestaurantCreateView(CreateView):
 	template_name = 'restaurant/form.html'
 	success_url = "/restaurant/"
 
+	def form_valid(self, form):
+		instance = form.save(commit=False)
+		instance.user = self.request.user
+		return super(RestaurantCreate, self).form_valid(form)
+
 def restaurant_createview(request):
 	form = RestaurantLocationCreateForm(request.POST or None)
 	errors = None
@@ -63,8 +68,6 @@ def restaurant_createview(request):
 		"errors" : errors,
 	}
 	return render(request, template_name, context)
-
-
 	
 
 
