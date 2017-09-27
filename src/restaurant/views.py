@@ -6,34 +6,38 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView
 
 #forms 
-#from .forms import RestaurantCreateForm
-
+from .forms import (
+	RestaurantLocationCreateForm,
+	# RestaurantCreateForm, for sample wrong way in creating a form
+	)
 #models
 from .models import RestaurantLocation
 
 # Create your views here.
 
 #forms
+
+class RestaurantCreateView(CreateView):
+	form_class = RestaurantLocationCreateForm
+	template_name = 'restaurant/form/html'
+
 def restaurant_createview(request):
-	# if request.method == "GET":
-	# 	print("get data")
-	if request.method == "POST":
-		# print("post data")
-		# print(request.POST)
-		title = request.POST.get("title") # request.POST["title"]
-		location = request.POST.get("location")
-		category = request.POST.get("category")
-		obj = RestaurantLocation.objects.create(
-				name = title,
-				location = location,
-				category = category,
-			)
+	form = RestaurantLocationCreateForm(request.POST or None)
+	errors = None
+	if form.is_valid():
+		form.save()
 		return HttpResponseRedirect("/restaurant/")
+	if form.errors:
+		print(form.errors)
+		errors = form.errors
 	template_name = 'restaurant/form.html'
-	context = {}
+	context = {
+		"form" : form,
+		"errors" : errors,
+	}
 	return render(request, template_name, context)
 
 
@@ -87,6 +91,51 @@ class RestaurantDetailView(DetailView):
 
 
 
+
+
+
+
+
+#wrong way in creating a form
+
+# def restaurant_createview(request):
+# 	# if request.method == "GET":
+# 	# 	print("get data")
+# 	if request.method == "POST":
+# 		# print("post data")
+# 		# print(request.POST)
+# 		title = request.POST.get("title") # request.POST["title"]
+# 		location = request.POST.get("location")
+# 		category = request.POST.get("category")
+# 		obj = RestaurantLocation.objects.create(
+# 				name = title,
+# 				location = location,
+# 				category = category,
+# 			)
+# 		return HttpResponseRedirect("/restaurant/")
+# 	template_name = 'restaurant/form.html'
+# 	context = {}
+# 	return render(request, template_name, context)
+
+# def restaurant_createview(request):
+# 	form = RestaurantCreateForm(request.POST or None)
+# 	errors = None
+# 	if form.is_valid():
+# 		obj = RestaurantLocation.objects.create(
+# 				name = form.cleaned_data.get('name'),
+# 				location = form.cleaned_data.get('location'),
+# 				category = form.cleaned_data.get('category'),
+# 			)
+# 		return HttpResponseRedirect("/restaurant/")
+# 	if form.errors:
+# 		print(form.errors)
+# 		errors = form.errors
+# 	template_name = 'restaurant/form.html'
+# 	context = {
+# 		"form" : form,
+# 		"errors" : errors,
+# 	}
+# 	return render(request, template_name, context)
 
 
 
