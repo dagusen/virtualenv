@@ -42,19 +42,19 @@ from restaurant.views import (
 )
 
 urlpatterns = [
-    url(r'^restaurant/$', RestaurantListView.as_view()),
+    url(r'^restaurant/$', RestaurantListView.as_view(), name='restaurant-list'),
     # url(r'^restaurant/(?P<slug>\w+)/$', RestaurantListView.as_view()),
     # url(r'^restaurant/(?P<res_id>\w+)/$', RestaurantDetailView.as_view()),
-    url(r'^restaurant/create/$', RestaurantCreateView.as_view()),
+    url(r'^restaurant/create/$', RestaurantCreateView.as_view(), name='restaurant-create'),
     #url(r'^restaurant/create/$', restaurant_createview),
     # slug
-    url(r'^restaurant/(?P<slug>[\w-]+)/$', RestaurantDetailView.as_view()),
+    url(r'^restaurant/(?P<slug>[\w-]+)/$', RestaurantDetailView.as_view(), name='restaurant-detail'),
     # url(r'^restaurant/mexican/$', MexicanRestaurantListView.as_view()),
     # url(r'^restaurant/asian/$', AsianFusionRestaurantListView.as_view()),
     url(r'^admin/', admin.site.urls),
-    url(r'^$', TemplateView.as_view(template_name='home.html')),
-    url(r'^about/$', TemplateView.as_view(template_name='about.html')),
-    url(r'^contact/$', TemplateView.as_view(template_name='contact.html')),
+    url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
+    url(r'^about/$', TemplateView.as_view(template_name='about.html'), name='about'),
+    url(r'^contact/$', TemplateView.as_view(template_name='contact.html'), name='contact'),
 
     # login
     url(r'^login/$', LoginView.as_view(), name='login'),
